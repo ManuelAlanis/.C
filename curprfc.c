@@ -2,8 +2,28 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h> 
-
-void capturaDatos(char *nombre,char *apellidoPaterno,char	*apellidoMaterno,char *diaNa,char *mesNa,char *añoNa,char *genero,char *entidad)
+void buscaconsonantes(char *busca){
+int c;
+int bandera;
+char consonantes[23]="qwrtpsdfghjklzxcvbnmñ";
+c=0;
+bandera=0;
+do{//buscando segunda consonante apellido paterno
+          for (int i = 0; i < 23; ++i)
+         
+          if(busca[c]==consonantes[i])
+         {
+            
+            bandera++;
+            if (bandera==2)
+            {
+               printf("%c", toupper(consonantes[i]));
+            }
+         }
+         c++;
+   }while(bandera!=2);
+ }
+void capturaDatos(char *nombre,char *apellidoPaterno,char *apellidoMaterno,char *diaNa,char *mesNa,char *añoNa,char *genero,char *entidad)
 {
    printf("Escribe tu primer nombre: \n");
    gets(nombre);
@@ -22,9 +42,10 @@ void capturaDatos(char *nombre,char *apellidoPaterno,char	*apellidoMaterno,char 
    printf("Abreviación de tu entidad federativa: Ejemplo 'BC'\n");
    gets(entidad);
 }
-void generacurp(char *nombre,char *apellidoPaterno,char	*apellidoMaterno,char *diaNa,char *mesNa,char *añoNa,char *genero,char *entidad)
+void generacurp(char *nombre,char *apellidoPaterno,char *apellidoMaterno,char *diaNa,char *mesNa,char *añoNa,char *genero,char *entidad)
 {
-	char vocales[5]="aeiou";
+  char *busca[10];
+  char vocales[5]="aeiou";
    int bandera;
    int b=1;
    int c;
@@ -40,7 +61,6 @@ void generacurp(char *nombre,char *apellidoPaterno,char	*apellidoMaterno,char *d
             }
       b++;
    }while(bandera==0);
-
    printf("%c",toupper(apellidoMaterno[0]));
    printf("%c",toupper(nombre[0] ));
    printf("%c%c",añoNa[2],añoNa[3] );//imprime año en dos digitos
@@ -48,58 +68,9 @@ void generacurp(char *nombre,char *apellidoPaterno,char	*apellidoMaterno,char *d
    printf("%c%c",diaNa[0],diaNa[1] );
    printf("%c",toupper(genero[0] ));
    printf("%c%c",toupper(entidad[0]),toupper(entidad[1] ));
-
-
-char consonantes[23]="qwrtpsdfghjklzxcvbnmñ";
-c=0;
-bandera=0;
-do{//buscando segunda consonante apellido paterno
-          for (int i = 0; i < 23; ++i)
-         
-          if(apellidoPaterno[c]==consonantes[i])
-         {
-            
-            bandera++;
-            if (bandera==2)
-            {
-               printf("%c", toupper(consonantes[i]));
-            }
-         }
-         c++;
-   }while(bandera!=2);
-c=0;
-bandera=0;
-do{//buscando segunda consonante apellido materno
-          for (int i = 0; i < 23; ++i)
-         
-          if(apellidoMaterno[c]==consonantes[i])
-         {
-            
-            bandera++;
-            if (bandera==2)
-            {
-               printf("%c", toupper(consonantes[i]));
-            }
-         }
-         c++;
-   }while(bandera!=2);
-c=0;
-bandera=0;
-do{//buscando segunda consonante nombre
-          for (int i = 0; i < 23; ++i)
-         
-          if(nombre[c]==consonantes[i])
-         {
-            
-            bandera++;
-            if (bandera==2)
-            {
-               printf("%c", toupper(consonantes[i]));
-            }
-         }
-         c++;
-   }while(bandera!=2);
-
+ buscaconsonantes(apellidoPaterno);
+ buscaconsonantes(apellidoMaterno);
+ buscaconsonantes(nombre);
 printf("01\n");
 }
 
@@ -132,18 +103,19 @@ void generaRFC(char *nombre,char *apellidoPaterno,char   *apellidoMaterno,char *
 
 int main()
 {
-	char *nombre[50];
-	char *apellidoPaterno[50];
-	char *apellidoMaterno[50];
-	char *diaNa[2];
-	char *mesNa[2];
-	char *añoNa[4];
-	char *genero[1];
-	char *entidad[2];
+  char *busca[10];
+  char *nombre[50];
+  char *apellidoPaterno[50];
+  char *apellidoMaterno[50];
+  char *diaNa[2];
+  char *mesNa[2];
+  char *añoNa[4];
+  char *genero[1];
+  char *entidad[2];
 
   printf("Programa para generar CURP y RFC\n");
-	capturaDatos(nombre,apellidoPaterno,apellidoMaterno,diaNa,mesNa,añoNa,genero,entidad);
-	generacurp(nombre,apellidoPaterno,apellidoMaterno,diaNa,mesNa,añoNa,genero,entidad);
+  capturaDatos(nombre,apellidoPaterno,apellidoMaterno,diaNa,mesNa,añoNa,genero,entidad);
+  generacurp(nombre,apellidoPaterno,apellidoMaterno,diaNa,mesNa,añoNa,genero,entidad);
   generaRFC(nombre,apellidoPaterno,apellidoMaterno,diaNa,mesNa,añoNa);
-	return 0;
+  return 0;
 }
