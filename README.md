@@ -1,7 +1,6 @@
 C
 ========
 
-Some examples  of "js "were written with little HTML
  
  - Compile C files:
 	
