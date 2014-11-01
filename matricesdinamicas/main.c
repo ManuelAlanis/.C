@@ -243,6 +243,10 @@ void multMatriz(double **multfRen,double **fMat,double **fMatB,int iColA,int iRe
 			for (k = 0; k < iColA; k++)
 			{
 				multfRen[i][j]+=fMat[i][k]*fMatB[k][j];
+
+
+
+				printf("%s\n", );
 			}
 
 	for(int i=0;i<iRenA;i++)
