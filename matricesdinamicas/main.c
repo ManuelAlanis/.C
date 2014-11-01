@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA);
-// void sumallenarMatriz(double **fMat,double **fMatB,double **sumfMat, int iRenA, int iColA,int iRenB, int iColB);
-double** crearMatrizSum(int iRenB, int iColB,int iRenA,int iColA);
+
+
 
 double** crearMatrizA(int iRenA, int iColA);
 double** crearMatrizB(int iRenB, int iColB);
@@ -70,7 +70,7 @@ void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA)
        case 2  :
        printf("OP 2\n");
        // double **sumfMat = crearMatrizsum(iRenA,iColA,iRenB,iColB);
-       crearMatrizsum(iRenA,iColA,iRenB,iColB);
+       // crearMatrizsum(iRenA,iColA,iRenB,iColB);
        // sumallenarMatriz(fMat,fMatB,sumfMat,iRenA,iColA,iRenB,iColB);
        break;
        case 4  :
@@ -174,7 +174,6 @@ void llenarMatrizB(double **fMatB, int iRenB, int iColB)
 	}
 }
 
-
 void imprimirMatrizA(double **fMatB, int iRenA, int iColA)
 {
 	printf("-----MATRIZ A:\n");
@@ -187,7 +186,6 @@ void imprimirMatrizA(double **fMatB, int iRenA, int iColA)
 	printf("\n");
 	}
 }
-
 
 void imprimirMatrizB(double **fMat, int iRenB, int iColB)
 {
