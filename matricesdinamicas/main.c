@@ -11,6 +11,8 @@ void resMatriz(double **resfRen,double **fMat,double **fMatB,int iColA,int iRenA
 double** crearMatrizMulti(int iRenB, int iColB,int iRenA,int iColA);
 void multMatriz(double **multfRen,double **fMat,double **fMatB,int iColA,int iRenA);
 
+double** redimencionarMatrizB(double **fRen,int iRenB, int iColB);
+
 double** crearMatrizA(int iRenA, int iColA);
 double** crearMatrizB(int iRenB, int iColB);
 
@@ -61,16 +63,18 @@ int main(void)
 void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA){
 	int bandera=1;
 	int opcion;
+	int a,b;
 
 	do{
 	printf("----------OPCIONES:	\n");
 	printf("[1] Realizar la multiplicación de matrices\n");
 	printf("[2] Realizar la suma de matrices\n");
 	printf("[3] Realizar la resta de matrices\n");
-	printf("[4] Salir\n");
 	printf("- - - - - - - - - - - \n");
+	printf("[4] Redimencionar Matriz A\n" );
 	printf("[5] Redimencionar Matriz A\n" );
-	printf("[6] Redimencionar Matriz A\n" );
+	printf("- - - - - - - - - - - \n");
+	printf("[6] Salir\n");
 	scanf("%d",&opcion);
 	switch(opcion)
 	{
@@ -80,7 +84,7 @@ void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA)
        if (multfRen==NULL)
        printf("No se puede sumar son de diferente dimensión\n");
        else
-       crearMatrizMulti(iRenB,iColB,iRenA,iColA);      
+       multMatriz(multfRen,fMat,fMatB,iColA,iRenA);
        break;
 
        case 2:
@@ -98,12 +102,38 @@ void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA)
        if (resfRen==NULL)
        printf("No se puede sumar son de diferente dimensión\n");
        else
-       resMatriz(sumfRen, fMat, fMatB, iColA, iRenA);
+		resMatriz(sumfRen, fMat, fMatB, iColA, iRenA);
        break;
 
-       case 4:
-       printf("\n");
        
+
+       case 4:
+       printf("Matriz B:\n");
+	   printf("¿Numero de Renglones?\n");
+	   scanf("%d",&a);
+	   printf("¿Numero de Columnas?\n");
+	   scanf("%d",&b);
+	   break;
+
+	   case 5:
+       
+       printf("Matriz B:\n");
+	   printf("¿Numero de Renglones?\n");
+	   scanf("%d",&a);
+	   printf("¿Numero de Columnas?\n");
+	   scanf("%d",&b);
+	   double **fRenB=redimencionarMatrizB(fMatB,a,b);
+	   if (fRenB==NULL)
+	   {
+	   	printf("\n");
+	   }else
+	   llenarMatrizB(fRenB,a,b);
+	   break;
+
+       
+
+       case 6:
+       printf("\n");
        bandera=0;
        break;
 	}
@@ -227,7 +257,7 @@ double** crearMatrizMulti(int iRenB, int iColB,int iRenA,int iColA)
 	else
 	{
 	printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -.\n");
-	printf("Son diferentes\n");
+	printf("Los reglones y columnas son diferentes entre si\n");
 	printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -.\n");
 	return 0;
 	}
@@ -237,18 +267,15 @@ void multMatriz(double **multfRen,double **fMat,double **fMatB,int iColA,int iRe
 {
 	int i, j,k;
 	printf("\n\n-------SUMANDO LAS MATRICES------\n\n");
-    
     for(i=0;i<iRenA;i++)
 		for(j=0;j<iColA;j++)		
-			for (k = 0; k < iColA; k++)
 			{
-				multfRen[i][j]+=fMat[i][k]*fMatB[k][j];
-
-
-
-				printf("%s\n", );
+				multfRen[i][j]=0;
+				for (k = 0; k < iColA; k++)
+				{
+					multfRen[i][j]+=fMat[i][k]*fMatB[k][j];
+				}
 			}
-
 	for(int i=0;i<iRenA;i++)
 	{
 		for(int j=0;j<iColA;j++)
@@ -266,6 +293,24 @@ void multMatriz(double **multfRen,double **fMat,double **fMatB,int iColA,int iRe
 
 
 //
+double** redimencionarMatrizB(double **fRen,int iRenB, int iColB)
+{	
+	
+	double **temp = (double**) realloc(fRen,iRenB*sizeof(double*));
+    for (int i=0; i<iRenB; i++)
+    {
+    temp[i] = (double*) realloc(fRen[i],iColB*sizeof(double));
+    }
+    
+    if(!temp)printf("La asignacion fallo\n");
+    else
+   	{printf("asignacion completada\n");
+    fRen=temp;
+	return fRen;
+	}
+    return 0;
+}
+
 double** crearMatrizB(int iRenB, int iColB)
 {
     double **fRen = (double**) malloc(iRenB*sizeof(double*));
