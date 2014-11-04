@@ -72,6 +72,11 @@ float**  modificarMatriz(int iRen, int iCol)
     fRen[i] = (float*) malloc(iCol*sizeof(float));        
     }          
      return fRen;
+     int 
+     scanfasdf
+     asdf
+     asdf
+     asfd
 }
 
 void destruirMatriz(float **fMat, int iRen)
