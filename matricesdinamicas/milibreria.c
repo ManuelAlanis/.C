@@ -47,7 +47,6 @@ void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA)
 	   resMatriz(sumfRen, fMat, fMatB, iColA, iRenA);
        break;
 
-       
 	   // case 4 y 5 capturo los nuevos valores para las matrices A y B
        case 4:
        printf("Matriz B:\n");
@@ -58,30 +57,29 @@ void menu(double **fMat,double **fMatB,int iRenB, int iColB,int iRenA,int iColA)
 	   break;
 
 	   case 5:
-       
        printf("Matriz B:\n");
 	   printf("¿Numero de Renglones?\n");
 	   scanf("%d",&a);
 	   printf("¿Numero de Columnas?\n");
 	   scanf("%d",&b);
-	   double **fRenB=redimencionarMatrizB(fMatB,a,b);
-	   if (fRenB==NULL)
-	   {
-	   	printf("\n");
-	   }else
-	   llenarMatrizB(fRenB,a,b);
+	   ///
+	   double **fMatB=redimencionarMatrizB(fMatB,a,b);
+	   
+	   printf("XXXXX\n");
+	   if (fMatB==NULL)
+		   {
+		   	printf("\n");
+		   }else
+	   		llenarMatrizB(fMatB,a,b);
 	   break;
 
-       
 	   //salir del menu
        case 6:
        printf("\n");
        bandera=0;
        break;
 	}
-
-	}while(bandera!=0);//bandera para cerrar el menu;
-
+}while(bandera!=0);//bandera para cerrar el menu;
 }
 //Suma matriz
 double** crearMatrizSum(int iRenB, int iColB,int iRenA,int iColA)
@@ -194,7 +192,7 @@ double** crearMatrizMulti(int iRenB, int iColB,int iRenA,int iColA)
 	else///valicacion si las matrices son deferente dimension
 	{
 	printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -.\n");
-	printf("Los reglones y columnas son diferentes entre si\n");
+	printf("Los reglones y columnas son diferentes entre si, no se puede multiplicar\n");
 	printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -.\n");
 	return 0;
 	}
@@ -222,20 +220,20 @@ void multMatriz(double **multfRen,double **fMat,double **fMatB,int iColA,int iRe
 		}
 	printf("\n");
 	}
-
 }
-/// END MULTIPLICACION MATRICES;
+/// END redimencionamiento MATRICES;
 double** redimencionarMatrizB(double **fRen,int iRenB, int iColB)
 {	
-	double **temp = (double**) realloc(fRen,iRenB*sizeof(double*));
+	double **fRen = (double**) realloc(fRen,iRenB*sizeof(double*));
     for (int i=0; i<iRenB; i++)
     {
-    temp[i] = (double*) realloc(fRen[i],iColB*sizeof(double));
+    fRen[i] = (double*) realloc(fRen[i],iColB*sizeof(double));
     }
-    if(!temp)printf("La asignacion fallo\n");
+
+    if(!fRen)printf("La asignacion fall0\n");
     else
-   	{printf("asignacion completada\n");
-    //fRen=temp;
+   	{printf("Asignacion completada\n");
+    // fRen=fRen; 
 	return fRen;
 	}
     return 0;
