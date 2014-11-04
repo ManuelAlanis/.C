@@ -7,13 +7,21 @@ void destruirMatriz(float **fMat, int iRen);
 float** modificarMatriz(int iRen, int iCol);
 int main(void)
 {
-     int iRen = 3; /* Número de Renglones */
-      int iCol = 3; /* Número de Columnas  */
+     int iRen;
+      int iCol;
       int resp;
+      printf("Bienvenido al sistema de matrices dinamicas\n");
+      printf("Creando matriz...\n");
+      printf("Numero de renglones?\n");
+      scanf("%d",&iRen);
+      printf("Numero de Columnas?\n");
+      scanf("%d",&iCol);
       float** fMat = crearMatriz(iRen,iCol);
       llenarMatriz(fMat,iRen,iCol);
       imprimirMatriz(fMat,iRen,iCol);
       printf("Quieres modificarMatriz?\n");
+      printf("[1] SI\n");
+      printf("[2] NO\n");
       scanf("%d",&resp);
       if (resp==1)
       {
@@ -26,11 +34,15 @@ int main(void)
       float** fMat = modificarMatriz(iRen,iCol);
       llenarMatriz(fMat,iRen,iCol);
       imprimirMatriz(fMat,iRen,iCol);
-
+      printf(" - - - - - - - - - -\n");
+      printf("Matriz moficada:\n");
+      printf("%d Columnas \n%d Renglones \n",iRen,iCol );
       }else
       {
-      destruirMatriz(fMat,iRen);
-       
+      printf(" - - - - - - - - - -\n");
+      printf("Matriz destruida, memoria liberada\n");
+      printf("Good bye\n");
+      destruirMatriz(fMat,iRen); 
       return 0; }
 
       }
