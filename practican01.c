@@ -22,7 +22,6 @@ void capturaDatos(char **etiquetas,char *nombre,char *pelicula,char *cancion,cha
 {
     
    char **iPtr;
-   
    iPtr=&*etiquetas;
 
      printf("Escribe tu %s :\n",*iPtr);
