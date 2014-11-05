@@ -23,7 +23,6 @@ int main(void)
       {
             printf("%d ",dias[i]);
       }
-      
       do
       {
       printf("Hay agregado %d dias \n",iTam );
@@ -46,20 +45,23 @@ int main(void)
       
 
       printf("Dia?\n");
-      scanf("%d",opdia);
+      scanf("%d",&opdia);
+      
       bandera=1;
       do
       {
       printf("[1]Venta de saborFresa\n");
       printf("[2]Venta de saborVainilla\n");
+      
       scanf("%d",&opventas);
+      printf("XXXXX\n");
       switch(opventas){
-            case 1: saborFresa[opventas]++;
-            printf("%d\n",saborFresa[opdia] );
+            case 1: saborFresa[opdia]++;
+            printf("Ventas de fresa%d\n",saborFresa[opdia] );
             break;
 
-            case 2: saborVainilla[opventas]++;
-            printf("%d\n",saborVainilla[opdia] );
+            case 2: saborVainilla[opdia]++;
+            printf("Ventas de vainilla%d\n",saborVainilla[opdia] );
             break;
 
             case 3: bandera=0; break;
