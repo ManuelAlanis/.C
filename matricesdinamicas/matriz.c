@@ -90,7 +90,7 @@ float**  modificarMatriz(int iRen, int iCol,int niRen, int niCol)
 
     }
     
-    return fRen;    
+    return iRen;    
 }
 void destruirMatriz(float **fMat, int iRen)
 {
