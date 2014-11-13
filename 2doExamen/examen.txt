@@ -1,0 +1,130 @@
+
+
+1. Describe con el mayor detalle posible lo que malloc() hace,
+así ccomo la forma de usarse. Agregar código para comprobar tu respuesta.
+
+//La funcion malloc(); asigna un bloque de memoria controlando su tamaño
+//Declaramos un puntero de tipo entero
+int *Mipuntero=NULL;
+//Asignamos directamente 4 bytes de memoria para Mipuntero en total 16 por que lo enteros utilizan 4 bytes c/u
+Mipuntero=(int *)malloc(4);
+//liberamos la varible con apuntador Mipuntero.
+free(Mipuntero);
+Mipuntero=NULL;
+//tambien se puede asignar memoria de esta manera: malloc(n*sizeof(int))
+/* Reutilizamos Mipuntero, ahora para reservar memoria para diez enteros */
+Mipuntero = malloc(10 * sizeof(int));
+free(Mipuntero);
+Mipuntero=NULL;
+//se recomienda que despues de liberar un puntero con free(); 
+//establecerlo con su valor a NULL
+
+2. Explica la diferencia que hay entre aplicar malloc() de la siguiente manera:
+char *codigo;
+codigo = malloc(10);
+codigo = malloc(15);
+
+char *codigo;
+	int i;
+	codigo=malloc(10);//asignamos 10 bytes de memoria a la variable CHAR codigo
+	if (!codigo)//validacion para la asignacion de memoria/
+	{
+		printf("¡ La asignación fallo !\n");//
+	} else printf("Asignación satisfactoria\n");
+	gets(codigo);//obtener la cadena de caracteres
+	for (i=0 ; i <strlen(codigo) ; i++)
+	{
+		printf("%c\n",codigo[i] );
+	}
+	codigo=malloc(15);//en este punto de codigo no estamos redimenzionando el tamaño de memoria
+	//estamos asignando un nuevo bloque de memoria, de esta manera habremnos consumido 10 bytes
+	// mas los 15 nuevos bytes. 25*4 bytes,100 bytes de memoria consumidos en total.
+	if (!codigo)
+	{
+		printf("¡ La asignación fallo !\n");
+	} else printf("Asignación satisfactoria\n");
+	gets(codigo);
+	for (i=0 ; i <strlen(codigo) ; i++)
+	{
+		printf("%c\n",codigo[i] );
+	}
+	free(codigo);//liberando la memoria de la variable codigo
+	codigo=NULL//
+	return 0;
+//contra usar realloc() de esta manera:
+codigo = malloc(10);
+codigo = realloc(codigo,15);
+int main()
+{
+	int *codigo=NULL;
+	int i;
+	codigo=malloc(10);//se asignan 10 bytes de memoria para la variable codigo
+ 	codigo=(int*)calloc(codigo,15*sizeof(int));//se utiliza realloc() para redimenzionar el espacio
+ 	//de memoria para la variable codigo. Estamos redimenzionando el bloque de memoria de la variable 'codigo'
+ 	// son 10 bytes mas 5 redimenzinados, 15*4, 60 bytes en total, manteniendo la informacion que se puedo haber almacenado 
+ 	// en los 10 primeros bytes/
+  	free(codigo);
+  	codigo=NULL
+	return 0;
+}
+3. Porqué usamos sizeof()? Agregar código para comprobar tu respuesta.
+
+sizeof para determinar el tamaño de bytes de un arreglo(o de cualquier tipo de dato) durante la compilacion del programa
+cuando aplicamos sizeof(varible), el operador devuelve un numero total de bytes de la variable como un arreglo entero
+con sizeof() tambien controlamos el tipo de dato que este regresa
+si la variable es entera forzamos el malloc a regresar un valor entero.
+
+ejemplo de sizeof(); para variable entera:
+variable=malloc(numero*sizeof(int));
+
+ejemplo de sizeof(); para matriz de tipo 'float'
+float **codigo = (float**) malloc(10*sizeof(float*));
+
+
+4. En qué situación sirve mejor usar calloc() que malloc()? Agregar un código ejemplo.
+
+Cuando utilizamos malloc(); la memoria no es inicializada en cero, borrada o 'limpiada', si necesitamos
+'iniciar la memoria' necesitamos utilizar cualquierloc(); 
+
+/* Reservamos memoria para almacenar N cantidad de enteros */
+codigo=malloc(10*sizeof(int));
+/* Reservamos memoria para almacenar N cantidad de enteros */
+codigo=calloc(n, sizeof(int));
+
+
+5. Explica hasta donde logres entender, cómo funciona detalladamente el siguiente código:
+float** crearMatriz(int iRen, int iCol)
+{
+    float **fRen = (float**) malloc(iRen*sizeof(float*));
+    for (int i=0; i<iRen; i++)
+    {
+        fRen[i] = (float*) malloc(iCol*sizeof(float));
+    }
+    return fRen;
+}
+
+Creamos una funcion que devuelve un valor del tipo 'float' apuntdor. recibimos como parametros
+los enteros iRen y iCol sin apuntador por que no es necesario modificarlos, solo utilizarlos para crear la matriz
+declaramos  variable de tipo 'float' fRen con doble "*" por que estamos creando una matriz
+despues asignamos memoria para el numero total de renglones
+con el 'for' creamos los renglones y los almacenamos en matriz fRen.
+en esta parte del codigo: fRen[i] = (float*) malloc(iCol*sizeof(float));
+como ya tenemos asignada memoria para los renglones, ahora asignamos memoria para las columnas
+y lo hacemos renglon por renglon; asi que que concluimos que 
+primero se crea o se asigna memoria para los renglones y despues para las columnas;
+y regresamos la matriz fRen del tipo float **fRen;
+esta matriz fRen la podemos recibimos en otra funcion o int main();
+y almacenarla en una variable. Tambien podemos crear un codigo para saber si la 'fRen' a la que le estamos 
+haciendo return fRen no se le asigno memoria correctamente o este vacia imprima el X error.
+
+al final de la funcion float** crearMatriz(int iRen, int iCol); tenemos
+return fRen;
+en otra funcion o int main();
+float** matriz = crearMatriz(iRen,iCol);
+if (matriz)
+printf("Matriz creada satisfactoriamente\n");
+else
+printf("Fallo la creacion de la matriz\n");
+
+
+
