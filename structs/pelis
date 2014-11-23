@@ -1,0 +1,2 @@
+gcc peliculas.c
+./a.out

@@ -57,6 +57,7 @@ int main(void)
  mat[0] = (struct Matriz*)malloc(sizeof(struct Matriz));
  mat[0]->ren = 1;
  mat[0]->col = 1;
+ 
  mat[0]->m = crearMatriz(mat[0]->ren, mat[0]->col);
  
  llenarMatriz(mat[0]->m,mat[0]->ren, mat[0]->col);

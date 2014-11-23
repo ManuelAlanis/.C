@@ -3,20 +3,13 @@
 #include <string.h>
 typedef struct
 {
-char *titulo;
-char *director;
-char **actores;
-int  *año;
-int ren;
-int col;
+	char *titulo;
+	char *director;
+	char **actores;
+	int  *año;
+	int ren;
+	int col;
 }Peliculas;
-
-struct Matriz
-{
- char **m;
- int ren;
- int col;
-};
 
 char** crearMatriz(int iRen, int iCol)
 {
@@ -35,7 +28,7 @@ void llenarMatriz(char **mat, int iRen, int iCol)
  {
  for(int j=0;j<iCol;j++)
  {
- 	printf("Actor No.%d\n",iRen );
+ 	printf("Actor No.%d\n",iCol );
  	scanf("%s",mat[i]);
  	printf("%s\n",mat[i] );
  }
@@ -47,7 +40,7 @@ void imprimirMatriz(char **mat, int iRen, int iCol)
  {
  for(int j=0;j<iCol;j++)
  {
- printf("%s ",mat[i]);
+ printf("Actor No.%d: %s \n",i,mat[i]);
  }
  printf("\n");
  }
@@ -60,9 +53,6 @@ void destruirMatriz(char **mat, int iRen)
  }
  free(mat);
 }
-
-
-
 int main(void)
 {
 	int i;
@@ -75,8 +65,8 @@ int main(void)
 	int iCol=1;
 	int iRen=1;
 	int numeroactores=0;
-	printf("Peliculas ?\n");
-	scanf("%d",&npeliculas);
+	printf("Programa peliculas xd \n");
+	
 	// memset?
 
 	do
@@ -102,17 +92,18 @@ int main(void)
 		printf("ingrese el nombre del director\n");
 		scanf("%s",producto[posicionpeliculas]->director);
 		printf("Cuantos actores hay?\n");
-		scanf("%d",&numeroactores);
-		char c = 'F';
-	   char *s;
+		scanf("%d",&producto[0]->col );
+		
 	   
+producto[0]->ren = 1;
+// producto[0]->col = 1;
+producto[0]->actores = crearMatriz(producto[0]->ren, producto[0]->col);
+ 
+llenarMatriz(producto[0]->actores,producto[0]->ren, producto[0]->col);
 
-	   s = (char*)malloc(5*sizeof(char));
-	   memset( s, c, 5 );
-	   for( i=0; i<5; i++ )
-	   printf( "c[%d]=%c ", i, c );
+	   
 	   printf( "\n" );
-	   free(s);
+	   
 		// if (producto.actores)
 		// {
 		// 	printf("Memoria asignada\n");
@@ -128,8 +119,10 @@ int main(void)
 			printf("Pelicula : %s\n",producto[i]->titulo);
 			printf("año: %d\n",*producto[i]->año);
 			printf("director: %s\n",producto[i]->director);
+			imprimirMatriz(producto[i]->actores,producto[i]->ren, producto[i]->col);	  	 
 			printf("______________________\n");
 			printf("______________________\n");
+			
 			// for (int i = 0; i < numeroactores; ++i)
 			// {
 			// 	printf("%s\n",nombreactores[i] );
@@ -143,13 +136,7 @@ int main(void)
 	}
 	} while (bandera==0);
 	
- 	producto[0]->ren = 1;
- 	producto[0]->col = 1;
- 	producto[0]->actores = crearMatriz(producto[0]->ren, producto[0]->col);
- 
- llenarMatriz(producto[0]->actores,producto[0]->ren, producto[0]->col);
- imprimirMatriz(producto[0]->actores,producto[0]->ren, producto[0]->col);
- 
+ 	
  destruirMatriz(producto[0]->actores,producto[0]->ren);
  free(producto[0]);
  free(producto);
