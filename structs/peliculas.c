@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 typedef struct
 {
 	char *titulo;
 	char *director;
 	char **actores;
-	int  *ano;
+	int  *año;
+	int  ID;
 	int  ren;
 	int  col;
+	
 	
 }Peliculas;
 
@@ -47,7 +50,7 @@ void imprimirMatriz(char **mat, int iRen, int iCol)
  printf("Actor No.%d: %s\n",i,mat[i]);
  
  }
- printf("\n");
+ // printf("\n");
  }
 }
 void destruirMatriz(char **mat, int iRen)
@@ -58,6 +61,7 @@ void destruirMatriz(char **mat, int iRen)
  }
  free(mat);
 }
+
 int main(void)
 {
 	char *var;
@@ -67,20 +71,19 @@ int main(void)
 	int bandera=0;
 	int posicionpeliculas=0;
 	int renglones;
-//	int   iTam;
 	Peliculas **producto = NULL;
     
 	int iCol=1;
 	int iRen=1;
 	int numeroactores=0;
-	printf("Programa peliculas xd \n");
-	
-	// memset?
 
+	int bandera2=0;
+	int op2;
+	printf("Programa peliculas xd \n");
 	do
 	{
-	printf("[1] Pelicula\n");
-	printf("[2] Ver Peliculas\n");
+	printf("[1] Agregar Pelicula\n");
+	printf("[2] Imprimir Peliculas\n");
 	printf("[3] Salir\n");
 	scanf("%d",&opcionmenu);
 	switch(opcionmenu)
@@ -91,31 +94,28 @@ int main(void)
 		
 		producto[posicionpeliculas] = (Peliculas*)malloc(sizeof(Peliculas));
 		
-		producto[posicionpeliculas]->titulo=malloc(10);
-		producto[posicionpeliculas]->ano=malloc(1);
+		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
+		producto[posicionpeliculas]->año=malloc(1);
 		producto[posicionpeliculas]->director=malloc(10);
 		producto[posicionpeliculas]->ren=(int)malloc(10*sizeof(int));
-
-
-		//producto[posicionpeliculas]->col=malloc(1);
+		producto[posicionpeliculas]->ID=(int)malloc(1*sizeof(int));
 		
-		
-		printf("Titulo: ");
+		printf("Nombre de la Pelicula? ");
 		scanf("%s",producto[posicionpeliculas]->titulo);
-		// producto[posicionpeliculas]->titulo=var;
-		printf("ingrese el año\n");
-		scanf("%d",producto[posicionpeliculas]->ano);
-		printf("ingrese el nombre del director\n");
+		printf("Director? ");
 		scanf("%s",producto[posicionpeliculas]->director);
-		printf("Cuantos actores hay?\n");
+		printf("Año en que salió la película? ");
+		scanf("%d",producto[posicionpeliculas]->año);
+		printf("Cuantos actores hay? ");
 		scanf("%d",&producto[posicionpeliculas]->ren);
-		
-	    //producto[0]->ren=(int*)realloc(producto[posicionpeliculas]->ren,iTam*sizeof(int));
-       // producto[0]->ren = 1;
-        //producto[posicionpeliculas]->col =(int*)realloc(producto[0]->col,producto[0]->ren*sizeof(int));
-        producto[posicionpeliculas]->col =1;
+		producto[posicionpeliculas]->col =1;
         producto[posicionpeliculas]->actores = crearMatriz(producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
+		
         
+        producto[posicionpeliculas]->ID=npeliculas;
+
+
+
         llenarMatriz(producto[posicionpeliculas]->actores,producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
 		printf("\n");
 	   
@@ -126,24 +126,35 @@ int main(void)
 		case 2:
 		printf("______________________\n");
 		printf("______PELICULAS_______\n");
-		for (int i = 0; i <posicionpeliculas; ++i)
+		do
 		{
-			printf("Pelicula : %s\n",producto[i]->titulo);
-			printf("año: %d\n",*producto[i]->ano);
-			printf("director: %s\n",producto[i]->director);
-			imprimirMatriz(producto[i]->actores,producto[i]->ren, producto[i]->col);	  	 
+			printf("ID\tTITULO\n");
+			for (int i = 0; i < posicionpeliculas; ++i)
+			{
+				printf("[%d]\t%s\n",producto[i]->ID,producto[i]->titulo);
+			}
+			scanf("%d",&op2);
+			op2=op2-1;
+			printf("ID: 00%d\n",producto[op2]->ID);
+			printf("Pelicula : %s\n",producto[op2]->titulo);
+			printf("año: %d\n",*producto[op2]->año);
+			printf("director: %s\n",producto[op2]->director);
+			imprimirMatriz(producto[op2]->actores,producto[op2]->ren, producto[op2]->col);	  	 
 			printf("______________________\n");
-			printf("______________________\n");
-			
-			
-		}
+			printf("- - - - - - - - - - - \n");
+
+
+			bandera2=1;
+		} while (bandera2==0);
+
+
 		break;
         
 		case 3:
 		bandera=1;
 		break;
 	}
-	} while (bandera==0);
+} while (bandera==0);
  	
  destruirMatriz(producto[0]->actores,producto[0]->ren);
  free(producto[0]);
