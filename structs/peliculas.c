@@ -7,8 +7,60 @@ char *titulo;
 char *director;
 char **actores;
 int  *año;
-int  numeroactores;
+int ren;
+int col;
 }Peliculas;
+
+struct Matriz
+{
+ char **m;
+ int ren;
+ int col;
+};
+
+char** crearMatriz(int iRen, int iCol)
+{
+    char **fRen = (char**) malloc(iRen*sizeof(char*));
+    for (int i=0; i<iRen; i++)
+    {
+        fRen[i] = (char*) malloc(iCol*sizeof(char));
+    }
+    return fRen;
+}
+void llenarMatriz(char **mat, int iRen, int iCol)
+{
+    char *nombre="Manuel";
+    
+    for(int i=0;i<iRen;i++)
+ {
+ for(int j=0;j<iCol;j++)
+ {
+ 	printf("Actor No.%d\n",iRen );
+ 	scanf("%s",mat[i]);
+ 	printf("%s\n",mat[i] );
+ }
+ }
+}
+void imprimirMatriz(char **mat, int iRen, int iCol)
+{
+ for(int i=0;i<iRen;i++)
+ {
+ for(int j=0;j<iCol;j++)
+ {
+ printf("%s ",mat[i]);
+ }
+ printf("\n");
+ }
+}
+void destruirMatriz(char **mat, int iRen)
+{
+    for(int i=0;i<iRen;i++)
+ {
+ free(mat[i]);
+ }
+ free(mat);
+}
+
 
 
 int main(void)
@@ -19,16 +71,13 @@ int main(void)
 	int bandera=0;
 	int posicionpeliculas=0;
 	Peliculas **producto = NULL;
+
 	int iCol=1;
 	int iRen=1;
 	int numeroactores=0;
 	printf("Peliculas ?\n");
-	// scanf("%d",&npeliculas);
-	// producto = (Peliculas**)realloc(producto, npeliculas * sizeof(Peliculas*));
-	// for (int i = 0; i < npeliculas; ++i)
-	// {
-	// 	producto[i] = (Peliculas*)malloc(sizeof(Peliculas));
-	// }
+	scanf("%d",&npeliculas);
+	// memset?
 
 	do
 	{
@@ -52,25 +101,18 @@ int main(void)
 		scanf("%d",producto[posicionpeliculas]->año);
 		printf("ingrese el nombre del director\n");
 		scanf("%s",producto[posicionpeliculas]->director);
-		
 		printf("Cuantos actores hay?\n");
 		scanf("%d",&numeroactores);
-		
-	    
-		
+		char c = 'F';
+	   char *s;
+	   
 
-    producto->actores = (char**) malloc(numeroactores*sizeof(char*));
-    for (int i=0; i<numeroactores; i++)
-    {
-        producto->actores[i] = (char*) malloc(40*sizeof(char));
-    }
-	    for (int i = 0; i < numeroactores; ++i)
-	    {
-	    	// *producto[i]->actores="pedro";
-	    	// printf("Actor No.%d\n",i);
-	    	// scanf("%s",actores[i]);
-	    	// printf("%s\n",producto->actores[i] );
-	    }
+	   s = (char*)malloc(5*sizeof(char));
+	   memset( s, c, 5 );
+	   for( i=0; i<5; i++ )
+	   printf( "c[%d]=%c ", i, c );
+	   printf( "\n" );
+	   free(s);
 		// if (producto.actores)
 		// {
 		// 	printf("Memoria asignada\n");
@@ -79,11 +121,15 @@ int main(void)
 		break;
 		
 		case 2:
-		for (int i = 0; i <3; ++i)
+		printf("______________________\n");
+		printf("______PELICULAS_______\n");
+		for (int i = 0; i <posicionpeliculas; ++i)
 		{
 			printf("Pelicula : %s\n",producto[i]->titulo);
 			printf("año: %d\n",*producto[i]->año);
 			printf("director: %s\n",producto[i]->director);
+			printf("______________________\n");
+			printf("______________________\n");
 			// for (int i = 0; i < numeroactores; ++i)
 			// {
 			// 	printf("%s\n",nombreactores[i] );
@@ -96,6 +142,17 @@ int main(void)
 		break;
 	}
 	} while (bandera==0);
+	
+ 	producto[0]->ren = 1;
+ 	producto[0]->col = 1;
+ 	producto[0]->actores = crearMatriz(producto[0]->ren, producto[0]->col);
+ 
+ llenarMatriz(producto[0]->actores,producto[0]->ren, producto[0]->col);
+ imprimirMatriz(producto[0]->actores,producto[0]->ren, producto[0]->col);
+ 
+ destruirMatriz(producto[0]->actores,producto[0]->ren);
+ free(producto[0]);
+ free(producto);
 	// for(i=0;i<npeliculas;i++)
 	// {
 	// printf("titulo: %s, año: %d\n",producto[i]->titulo,producto[i]->año);
