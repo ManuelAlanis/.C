@@ -13,9 +13,9 @@ void imprimirInfoLibro(struct Libros libro);
 
 int main(void) 
 { 
-      struct Libros **libro1; 
+      struct Libros **libro1=NULL; 
       
-      llenar(&libro1[posicion]); 
+      llenar(libro1); 
       imprimirInfoLibro(libro1); 
       
       return 0;
@@ -39,4 +39,3 @@ void imprimirInfoLibro(struct Libros libro){
       printf("Editorial: %s\n",libro.editorial );
       printf("ISBN: %ld\n",libro.isbn);
 }
-

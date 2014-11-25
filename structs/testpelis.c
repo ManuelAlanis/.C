@@ -30,7 +30,7 @@ int main()
 			
 			case 1:
 			
-if (npelicula==0)
+		if (npelicula==0)
 			{
 				pelicula=(struct Peliculas*) malloc(sizeof(struct Peliculas));
 			}else		

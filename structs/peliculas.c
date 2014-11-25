@@ -58,6 +58,7 @@ void destruirMatriz(char **mat, int iRen)
  free(mat);
 }
 
+
 int main(void)
 {
 	char *var;
@@ -70,7 +71,7 @@ int main(void)
 	int iCol=1;
 	int iRen=1;
 	int numeroactores=0;
-	Peliculas **producto = NULL;
+	Peliculas **producto = NULL;//creando mi estructura donde se almacenaran mis peliculas
 	int bandera2=0;
 	int op2;
 
@@ -84,16 +85,15 @@ int main(void)
 	switch(opcionmenu)
 	{
 		case 1:
-		npeliculas++;
-		producto = (Peliculas**)realloc(producto, npeliculas * sizeof(Peliculas*));
+		npeliculas++;//variable para controlar el numero total de peliculas
+		producto = (Peliculas**)realloc(producto, 10 * sizeof(Peliculas*));
 		//Asignacion de memoria para las variables de la estructura Peliculas
-		producto[posicionpeliculas] = (Peliculas*)malloc(sizeof(Peliculas));
-		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
-		producto[posicionpeliculas]->año=malloc(1);
-		producto[posicionpeliculas]->director=malloc(10);
-		producto[posicionpeliculas]->ren=(int)malloc(10*sizeof(int));
-		producto[posicionpeliculas]->ID=(int)malloc(1*sizeof(int));
-		
+		producto[0] = (Peliculas*)malloc(sizeof(Peliculas));//asignacion de memoria par la nueva pelicula
+		producto[0]->titulo=(char*)malloc(10*sizeof(char));
+		producto[0]->año=malloc(1);//asignacion de memoria para las variables del prototipo
+		producto[0]->director=malloc(10);
+		producto[0]->ren=(int)malloc(10*sizeof(int));
+		producto[0]->ID=(int)malloc(1*sizeof(int));
 		printf("Nombre de la Pelicula? ");
 		scanf("%s",producto[posicionpeliculas]->titulo);
 		printf("Director? ");
@@ -104,11 +104,13 @@ int main(void)
 		scanf("%d",&producto[posicionpeliculas]->ren);
 
 		producto[posicionpeliculas]->col =1;
-        producto[posicionpeliculas]->actores = crearMatriz(producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
+        producto[posicionpeliculas]->actores = crearMatriz(producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);//creacion de la matriz para actores
         producto[posicionpeliculas]->ID=npeliculas;
         llenarMatriz(producto[posicionpeliculas]->actores,producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
 		printf("\n");
-		posicionpeliculas++;
+		posicionpeliculas++;//esta variable controla la posicion de las peliculas, 
+		//la mantengo atrasa y la aumento al final para que la primera posicion sea 0
+
 		break;
 		case 2:
 		printf("______________________\n");
@@ -116,11 +118,11 @@ int main(void)
 		do
 		{
 			printf("ID\tTITULO\n");
-			for (int i = 0; i < posicionpeliculas; ++i)
+			for (int i = 0; i < posicionpeliculas; ++i)//posicionpeliculas para imprimir el total de las peliculas guardadas
 			{
-				printf("[%d]\t%s\n",producto[i]->ID,producto[i]->titulo);
+				printf("[%d]\t%s\n",producto[i]->ID,producto[i]->titulo);//imprimiento las peliculas almacenadas
 			}
-			scanf("%d",&op2);
+			scanf("%d",&op2);//
 			op2=op2-1;
 			printf("ID: 00%d\n",producto[op2]->ID);
 			printf("Pelicula : %s\n",producto[op2]->titulo);
@@ -137,12 +139,12 @@ int main(void)
 		break;
 	}
 } while (bandera==0);
- 	
- destruirMatriz(producto[0]->actores,producto[0]->ren);
-	for(i=0;i<npeliculas;i++)
+ 	destruirMatriz(producto[0]->actores,producto[0]->ren);//liberando memoria de la matriz
+	for(i=0;i<npeliculas;i++)//ciclo para librerar todas los posiciones que se crearon para las peliculas
 	{
 	free(producto[i]);
 	}
-	free(producto);
+	free(producto);	
+ 
 return 0;
 }
