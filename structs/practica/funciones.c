@@ -49,7 +49,7 @@ void menuprincipal(){
 }
 
 
-void capturapelicula(Peliculas **producto,int posicionpeliculas,int npeliculas)
+void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
 		printf("Nombre de la Pelicula? ");
 		scanf("%s",producto[posicionpeliculas]->titulo);
