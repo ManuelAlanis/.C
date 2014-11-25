@@ -1,7 +1,8 @@
+//Pedro Eduardo Guzman Flores 
+//Manuel Antonio Alanis Carrillo
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include "funciones.h"
 
 struct Peliculas
 {
@@ -14,11 +15,10 @@ struct Peliculas
 	int  col;
 };
 
-char** crearMatriz(int iRen, int iCol);
-void llenarMatriz(char **mat, int iRen, int iCol);
-void imprimirMatriz(char **mat, int iRen, int iCol);
-void destruirMatriz(char **mat, int iRen);
-void menuimpreso();
+void capturarActores(char **mat, int iRen, int iCol);
+void imprimirActores(char **mat, int iRen, int iCol);
+void destruirMatrizActores(char **mat, int iRen);
+
 void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas);
 void memorianuevapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas);
 void seleccionapelicula(struct Peliculas **producto,int posicionpeliculas);
@@ -37,11 +37,7 @@ int main(void)
 return 0;
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-char** crearMatriz(int iRen, int iCol)
+char** crearMatrizActores(int iRen, int iCol)
 {
     char **fRen = (char**) malloc(iRen*sizeof(char*));
     //char **fRen = (char**)realloc(fRen,iRen*sizeof(char*));
@@ -51,7 +47,7 @@ char** crearMatriz(int iRen, int iCol)
     }
     return fRen;
 }
-void llenarMatriz(char **mat, int iRen, int iCol)
+void capturarActores(char **mat, int iRen, int iCol)
 { 
     for(int i=0;i<iRen;i++)
  {
@@ -62,7 +58,7 @@ void llenarMatriz(char **mat, int iRen, int iCol)
  }
  }
 }
-void imprimirMatriz(char **mat, int iRen, int iCol)
+void imprimirActores(char **mat, int iRen, int iCol)
 {
  for(int i=0;i<iRen;i++)
  {
@@ -74,22 +70,21 @@ void imprimirMatriz(char **mat, int iRen, int iCol)
  // printf("\n");
  }
 }
-void destruirMatriz(char **mat, int iRen)
+void destruirMatrizActores(char **mat, int iRen)
 {
+    //liberando memoria para el numero total actores
+    //posicion por posicion
     for(int i=0;i<iRen;i++)
- {
- free(mat[i]);
- }
- free(mat);
+ 	{
+ 	free(mat[i]);
+ 	}
+ 	free(mat);
 }
 
-void menuimpreso(){
-	printf("[1] Agregar Pelicula\n");
-	printf("[2] Imprimir Peliculas\n");
-	printf("[3] Salir\n");
-}
+
 void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
+		//capturando las cadenas con la variable de control 'posicionpeliculas'
 		printf("Nombre de la Pelicula? ");
 		scanf("%s",producto[posicionpeliculas]->titulo);
 		printf("Director? ");
@@ -97,15 +92,21 @@ void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeli
 		printf("Año en que salió la película? ");
 		scanf("%d",producto[posicionpeliculas]->año);
 		printf("Cuantos actores hay? ");
+		//capturando el total deseado de actores;
 		scanf("%d",&producto[posicionpeliculas]->ren);
 		producto[posicionpeliculas]->col =1;
-        producto[posicionpeliculas]->actores = crearMatriz(producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
+        //creado una matriz dinamica para el numero total de actores controlada por los renglones de producto[posicionpeliculas]->ren
+        producto[posicionpeliculas]->actores = crearMatrizActores(producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
         producto[posicionpeliculas]->ID=npeliculas;
-        llenarMatriz(producto[posicionpeliculas]->actores,producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
+        //capturar el numero total de actores deseados por el usuario
+        //para la posicion de 'posicionpeliculas', posicion peliculas hace que se almacene en el arreglo siguiente
+        capturarActores(producto[posicionpeliculas]->actores,producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
         printf("\n");
 }
 void memorianuevapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
+		//asignacion de memoria para las nuevas posiciones de la estructura
+		//con la variable posicion peliculas para controlar las posociones de los arreglos
 		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
 		producto[posicionpeliculas]->año=malloc(1);
 		producto[posicionpeliculas]->director=malloc(10);
@@ -128,12 +129,13 @@ void seleccionapelicula(struct Peliculas **producto,int posicionpeliculas)
 				printf("[%d]\t%s\n",producto[i]->ID,producto[i]->titulo);
 			}
 			scanf("%d",&op2);
-			op2=op2-1;
+			op2=op2-1;//se realiza la resta para que la opcion seleccionada
+			//se convierta en la posicion real del arreglo.
 			printf("ID: 00%d\n",producto[op2]->ID);
 			printf("Pelicula : %s\n",producto[op2]->titulo);
 			printf("año: %d\n",*producto[op2]->año);
 			printf("director: %s\n",producto[op2]->director);
-			imprimirMatriz(producto[op2]->actores,producto[op2]->ren, producto[op2]->col);	  	 
+			imprimirActores(producto[op2]->actores,producto[op2]->ren, producto[op2]->col);	  	 
 			printf("______________________\n");
 			printf("- - - - - - - - - - - \n");
 			bandera2=1;
@@ -142,14 +144,16 @@ void seleccionapelicula(struct Peliculas **producto,int posicionpeliculas)
 }
 void liberarmemoria(struct Peliculas **producto,int npeliculas,int i)
 {	
+	system("clear");
 	for (int i = 0; i < npeliculas; ++i)
-	{
-		destruirMatriz(producto[i]->actores,producto[i]->ren);
+	{	//liberando todas las posiciones creadas para la matriz de los actores
+		//liberacion controlada por el numero de peliculas generadas: npeliculas
+		destruirMatrizActores(producto[i]->actores,producto[i]->ren);
 	}
 	for(i=0;i<npeliculas;i++)
 	{
-	free(producto[i]);
-	printf("Pelicula %d liberada | ",i );
+	free(producto[i]);//liberando las posiciones de la estructura generada
+	printf("| Pelicula %d liberada | \n",i );
 	}
 	free(producto);	
 }
@@ -157,7 +161,9 @@ void menuprincipal(struct Peliculas **producto,int npeliculas,int posicionpelicu
 {
 	do
 	{
-	menuimpreso();
+	printf("[1] Agregar Pelicula\n");
+	printf("[2] Imprimir Peliculas\n");
+	printf("[3] Salir\n");
 	scanf("%d",&opcionmenu);
 	switch(opcionmenu)
 	{
@@ -165,15 +171,17 @@ void menuprincipal(struct Peliculas **producto,int npeliculas,int posicionpelicu
 		npeliculas++;//para aumentar el numero total de peliculas generadas		
 		producto = (struct Peliculas**)realloc(producto, 10 * sizeof(struct Peliculas*));
 		producto[posicionpeliculas] = (struct Peliculas*)malloc(sizeof(struct Peliculas));
-		printf("Siguiente\n");
+		//asignando memoria para la nueva pelicula
 		memorianuevapelicula(producto,posicionpeliculas,npeliculas);
+		//aumentando la posicion de posicionpeliculas, para la posible siguiente vuelta de asignacion
 		posicionpeliculas++; 
 		break;
 		case 2:
+		//menu para imprimir y seleccionar las peliculas capturadas con su ID
 		seleccionapelicula(producto,posicionpeliculas);
 		break;
 		case 3:
-		bandera=1; break;
+		bandera=1; break;//bandera de salida
 	}
 	} while (bandera==0);
  	liberarmemoria(producto,npeliculas,i); 
