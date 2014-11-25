@@ -64,16 +64,6 @@ void menuprincipal(){
 	printf("[3] Salir\n");
 }
 
-void memorianuevapelicula(Peliculas **producto,int posicionpeliculas)
-{
-		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
-		producto[posicionpeliculas]->año=malloc(1);
-		producto[posicionpeliculas]->director=malloc(10);
-		producto[posicionpeliculas]->ren=(int)malloc(10*sizeof(int));
-		producto[posicionpeliculas]->ID=(int)malloc(1*sizeof(int));
-
-}
-
 
 void capturapelicula(Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
@@ -92,9 +82,23 @@ void capturapelicula(Peliculas **producto,int posicionpeliculas,int npeliculas)
         printf("\n");
 }
 
-
-void seleccionapelicula(Peliculas **producto,int posicionpeliculas,int op2,int bandera2)
+void memorianuevapelicula(Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
+		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
+		producto[posicionpeliculas]->año=malloc(1);
+		producto[posicionpeliculas]->director=malloc(10);
+		producto[posicionpeliculas]->ren=(int)malloc(10*sizeof(int));
+		producto[posicionpeliculas]->ID=(int)malloc(1*sizeof(int));
+		capturapelicula(producto,posicionpeliculas,npeliculas);
+}
+
+
+
+
+void seleccionapelicula(Peliculas **producto,int posicionpeliculas)
+{
+	int bandera2=0;
+	int op2;
 	printf("______________________\n");
 		printf("______PELICULAS_______\n");
 		do
@@ -118,14 +122,14 @@ void seleccionapelicula(Peliculas **producto,int posicionpeliculas,int op2,int b
 
 }
 
-void liberarmemoria(Peliculas **producto,int posicionpeliculas,int i)
+void liberarmemoria(Peliculas **producto,int npeliculas,int i)
 {	
-	for (int i = 0; i < posicionpeliculas; ++i)
+	for (int i = 0; i < npeliculas; ++i)
 	{
 			destruirMatriz(producto[i]->actores,producto[i]->ren);
 	}
 
-	for(i=0;i<posicionpeliculas;i++)
+	for(i=0;i<npeliculas;i++)
 	{
 	free(producto[i]);
 	}
@@ -135,14 +139,11 @@ void liberarmemoria(Peliculas **producto,int posicionpeliculas,int i)
 int main(void)
 {
 	int i;
-	// int npeliculas=0;
+	int npeliculas=0;
 	int opcionmenu;
 	int bandera=0;
 	int posicionpeliculas=0;
-	int numeroactores=0;
 	Peliculas **producto = NULL;
-	int bandera2=0;
-	int op2;
 	do
 	{
 	menuprincipal();
@@ -153,16 +154,17 @@ int main(void)
 		npeliculas++;//para aumentar el numero total de peliculas generadas		
 		producto = (Peliculas**)realloc(producto, 10 * sizeof(Peliculas*));
 		producto[posicionpeliculas] = (Peliculas*)malloc(sizeof(Peliculas));
-		memorianuevapelicula(producto,posicionpeliculas);
-		capturapelicula(producto,posicionpeliculas,npeliculas);
-		posicionpeliculas++; break;
+		memorianuevapelicula(producto,posicionpeliculas,npeliculas);
+		
+		posicionpeliculas++; 
+		break;
 		case 2:
-		seleccionapelicula(producto,posicionpeliculas,op2,bandera2);
+		seleccionapelicula(producto,posicionpeliculas);
 		break;
 		case 3:
 		bandera=1; break;
 	}
-} while (bandera==0);
- 	liberarmemoria(producto,posicionpeliculas,i); 
+	} while (bandera==0);
+ 	liberarmemoria(producto,npeliculas,i); 
 return 0;
 }
