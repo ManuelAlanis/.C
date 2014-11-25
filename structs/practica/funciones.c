@@ -1,4 +1,6 @@
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char** crearMatriz(int iRen, int iCol)
 {
@@ -42,13 +44,11 @@ void destruirMatriz(char **mat, int iRen)
  free(mat);
 }
 
-void menuprincipal(){
+void menuimpreso(){
 	printf("[1] Agregar Pelicula\n");
 	printf("[2] Imprimir Peliculas\n");
 	printf("[3] Salir\n");
 }
-
-
 void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
 		printf("Nombre de la Pelicula? ");
@@ -65,8 +65,7 @@ void capturapelicula(struct Peliculas **producto,int posicionpeliculas,int npeli
         llenarMatriz(producto[posicionpeliculas]->actores,producto[posicionpeliculas]->ren, producto[posicionpeliculas]->col);
         printf("\n");
 }
-
-void memorianuevapelicula(Peliculas **producto,int posicionpeliculas,int npeliculas)
+void memorianuevapelicula(struct Peliculas **producto,int posicionpeliculas,int npeliculas)
 {
 		producto[posicionpeliculas]->titulo=(char*)malloc(10*sizeof(char));
 		producto[posicionpeliculas]->año=malloc(1);
@@ -75,11 +74,7 @@ void memorianuevapelicula(Peliculas **producto,int posicionpeliculas,int npelicu
 		producto[posicionpeliculas]->ID=(int)malloc(1*sizeof(int));
 		capturapelicula(producto,posicionpeliculas,npeliculas);
 }
-
-
-
-
-void seleccionapelicula(Peliculas **producto,int posicionpeliculas)
+void seleccionapelicula(struct Peliculas **producto,int posicionpeliculas)
 {
 	int bandera2=0;
 	int op2;
@@ -106,8 +101,7 @@ void seleccionapelicula(Peliculas **producto,int posicionpeliculas)
 		} while (bandera2==0);
 
 }
-
-void liberarmemoria(Peliculas **producto,int npeliculas,int i)
+void liberarmemoria(struct Peliculas **producto,int npeliculas,int i)
 {	
 	for (int i = 0; i < npeliculas; ++i)
 	{
@@ -120,4 +114,30 @@ void liberarmemoria(Peliculas **producto,int npeliculas,int i)
 	}
 	free(producto);	
 }
+void menuprincipal(struct Peliculas **producto,int npeliculas,int posicionpeliculas,int opcionmenu,int bandera,int i)
+{
+	do
+	{
+	menuimpreso();
+	scanf("%d",&opcionmenu);
+	switch(opcionmenu)
+	{
+		case 1:
+		npeliculas++;//para aumentar el numero total de peliculas generadas		
+		producto = (struct Peliculas**)realloc(producto, 10 * sizeof(struct Peliculas*));
+		producto[posicionpeliculas] = (struct Peliculas*)malloc(sizeof(struct Peliculas));
+		printf("Siguiente\n");
+		memorianuevapelicula(producto,posicionpeliculas,npeliculas);
+		posicionpeliculas++; 
+		break;
+		case 2:
+		seleccionapelicula(producto,posicionpeliculas);
+		break;
+		case 3:
+		bandera=1; break;
+	}
+	} while (bandera==0);
+ 	liberarmemoria(producto,npeliculas,i); 
+}
+
 

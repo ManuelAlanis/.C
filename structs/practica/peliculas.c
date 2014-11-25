@@ -36,6 +36,11 @@ int main(void)
 	menuprincipal(producto,npeliculas,posicionpeliculas,opcionmenu,bandera,i);
 return 0;
 }
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 char** crearMatriz(int iRen, int iCol)
 {
     char **fRen = (char**) malloc(iRen*sizeof(char*));
