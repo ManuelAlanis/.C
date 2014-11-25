@@ -153,9 +153,10 @@ void liberarmemoria(struct Peliculas **producto,int npeliculas,int i)
 	for(i=0;i<npeliculas;i++)
 	{
 	free(producto[i]);//liberando las posiciones de la estructura generada
-	printf("| Pelicula %d liberada | \n",i );
+	printf("| Pelicula %d liberada  | \n",i );
 	}
 	free(producto);	
+	printf("\n| %d Peliculas liberadas |\n",npeliculas );
 }
 void menuprincipal(struct Peliculas **producto,int npeliculas,int posicionpeliculas,int opcionmenu,int bandera,int i)
 {
